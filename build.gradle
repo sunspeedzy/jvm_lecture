@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+}
+
+group 'zy.jvm'
+version '1.0'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+repositories {
+    mavenLocal()  // 读取 maven 本地库,如果依赖jar已存在就不再下载
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }  // 设定下载的maven源的url
+}
+
+dependencies {
+}
