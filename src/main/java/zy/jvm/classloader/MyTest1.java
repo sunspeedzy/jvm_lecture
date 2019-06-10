@@ -9,6 +9,7 @@ package zy.jvm.classloader;
  [Loaded zy.jvm.classloader.MyParent1 from file:/D:/gitRepo/jvm_lecture/build/classes/java/main/]
  [Loaded zy.jvm.classloader.MyChild1 from file:/D:/gitRepo/jvm_lecture/build/classes/java/main/]
  * 说明自定义类的加载顺序为MyTest1 > MyParent1 > MyChild1
+ * @author zhangyan_g
  */
 
 public class MyTest1 {
