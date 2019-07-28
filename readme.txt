@@ -8,3 +8,11 @@ zy.jvm.classloader.MyTest5 用来演示 接口的初始化规则
 zy.jvm.classloader.MyTest6 用来演示 类加载器准备阶段的初始化过程 以及 初始化阶段的执行顺序
 zy.jvm.classloader.MyTest5_2 用来演示 接口的初始化规则
 zy.jvm.classloader.MyTest7 用来验证 类加载的双亲机制
+zy.jvm.classloader.MyTest8 用来验证 static final的成员在编译时确定则被引用时不会引起所属类的加载，
+                           在运行时确定则被引用时会引起所属类的加载，与 MyTest3 类似，不再编写
+zy.jvm.classloader.MyTest9 用来验证 类继承关系 与 初始化顺序和类加载顺序的 联系
+zy.jvm.classloader.MyTest10 与 MyTest9 类似，只是对Parent类的使用方式不同，使Parent类的初始化不会由Child类的初始化引起
+zy.jvm.classloader.MyTest11 通过子类去访问父类里定义的内容（方法、变量、常量），是对父类的主动使用，而不是对子类的主动使用，
+                            是否是主动使用要看定义内容的类，而不是看调用方是谁
+zy.jvm.classloader.MyTest12 用来验证 调用ClassLoader类的loadClass方法加载一个类，并不是对类的主动使用，不会导致类的初始化
+                            反射会造成主动使用类
