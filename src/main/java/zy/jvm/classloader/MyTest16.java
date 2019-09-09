@@ -15,6 +15,8 @@ public class MyTest16 extends ClassLoader {
 
     private String classLoaderName;
 
+    private String path;
+
     private final String fileExtension = ".class";
 
     public MyTest16(String classLoaderName) {
@@ -42,19 +44,22 @@ public class MyTest16 extends ClassLoader {
         this.classLoaderName = classLoaderName;
     }
 
-    @Override
-    public String toString() {
-        return "[" + this.classLoaderName + "]" ;
+    public void setPath(String path) {
+        this.path = path;
     }
 
     /**
      * 根据类名寻找这个类，由 java.lang.ClassLoader 的 loadClass 方法调用
+     * 在使用 MyTest16(String) 这一构造函数时 findClass 方法根本没有执行，className的类由系统类加载器（父加载器）加载
      * @param className
      * @return
      * @throws ClassNotFoundException
      */
     @Override
     protected Class<?> findClass(String className) throws ClassNotFoundException {
+        System.out.println("findClass invoked: " + className);
+        System.out.println("class loader name: " + this.classLoaderName);
+
         byte[] data = this.loadClassData(className);
 
         // defineClass方法 将 字节数组data 转换为Class实例，在使用这个Class实例之前，它必须是已被解析的
@@ -64,20 +69,20 @@ public class MyTest16 extends ClassLoader {
     /**
      * 加载类数据，自定义的私有方法，由 findClass 方法调用
      * 要读取类文件的字节数组
-     * @param name 要加载的类的名字
+     * @param className 要加载的类的名字
      * @return
      */
-    private byte[] loadClassData(String name) {
+    private byte[] loadClassData(String className) {
         InputStream is = null;
         // 存储返回值
         byte[] data = null;
         ByteArrayOutputStream baos = null;
 
-        try {
-            // 将类名中包的分隔符变为当前文件系统的分隔符
-            this. classLoaderName = this.classLoaderName.replace(".", File.separator);
+        // 将类名中包的分隔符变为当前文件系统的分隔符
+        className = className.replace(".", "/");
 
-            is = new FileInputStream(new File(name + this.fileExtension));
+        try {
+            is = new FileInputStream(new File(this.path + className + this.fileExtension));
             baos = new ByteArrayOutputStream();
 
             int ch = 0;
@@ -114,9 +119,28 @@ public class MyTest16 extends ClassLoader {
         Object object = clazz.newInstance();
 
         System.out.println(object);
+        System.out.println(clazz.getClassLoader().toString());
+        // 结果是
+        // zy.jvm.classloader.MyTest1@2503dbd3
+        // sun.misc.Launcher$AppClassLoader@135fbaa4
+        // 系统类加载器是 MyTest1的 定义类加载器，而MyTest16和系统类加载器是MyTest1的 初始类加载器
     }
     public static void main(String[] args) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
-        MyTest16 locader1 = new MyTest16("loader1");
-        test(locader1);
+        // 创建一个类加载器 loader1，其双亲类加载器是 系统类加载器
+        MyTest16 loader1 = new MyTest16("loader1");
+//        test(loader1);
+        // 使类加载器loader1在设置的路径上去寻找相关的类，但这个路径是classpath，所以系统类加载器会直接加载这个路径里的类
+//        loader1.setPath("/Users/zhangyan/Documents/Learning/SelfCodes/jvm_lecture/out/production/classes");
+        loader1.setPath("/Users/zhangyan/Documents/Learning/SelfCodes/cpout/");
+
+        Class<?> clazz = loader1.loadClass("zy.jvm.classloader.MyTest1");
+        System.out.println("class: " + clazz.hashCode());
+        Object object = clazz.newInstance();
+
+        System.out.println(object);
+        System.out.println(clazz.getClassLoader().toString());
+
+
+
     }
 }
