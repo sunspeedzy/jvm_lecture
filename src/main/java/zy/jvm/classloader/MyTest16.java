@@ -7,9 +7,9 @@ import java.io.InputStream;
 
 /**
  * 自定义类加载器
- * 1. 需要定义一个 ClassLoader 的名字
- * 2. 可以给这个类加载器指定一个父加载器
- * 3. 实现 findClass 方法，通过类名可以加载到这个类
+ * 1. 需要定义一个 ClassLoader 的名字。通过构造函数 MyTest16(String classLoaderName)
+ * 2. 可以给这个类加载器指定一个父加载器。通过构造函数 MyTest16(ClassLoader parent, String classLoaderName)
+ * 3. 实现 findClass 方法，通过类名可以加载到这个类。通过 loadClassData(String name) 实现
  */
 public class MyTest16 extends ClassLoader {
 
@@ -57,6 +57,7 @@ public class MyTest16 extends ClassLoader {
     protected Class<?> findClass(String className) throws ClassNotFoundException {
         byte[] data = this.loadClassData(className);
 
+        // defineClass方法 将 字节数组data 转换为Class实例，在使用这个Class实例之前，它必须是已被解析的
         return defineClass(className, data, 0, data.length);
     }
 
@@ -102,6 +103,13 @@ public class MyTest16 extends ClassLoader {
     }
 
     public static void test(ClassLoader classLoader) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+        // loadClass方法，加载指定二进制名字的类，调用loadClass(String className, false)方法去加载类
+        // loadClass(String className, false)方法默认实现搜索类的顺序如下
+        // 1.  Invoke findLoadedClass(String) to check if the class has already been loaded.
+        // 2. Invoke the {@link #loadClass(String) <tt>loadClass</tt>} method
+        //  on the parent class loader.  If the parent is <tt>null</tt> the class
+        //  loader built-in to the virtual machine is used, instead.
+        // 3. Invoke the {@link #findClass(String)} method to find the class.
         Class<?> clazz = classLoader.loadClass("zy.jvm.classloader.MyTest1");
         Object object = clazz.newInstance();
 

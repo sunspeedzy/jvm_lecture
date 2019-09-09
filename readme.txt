@@ -19,3 +19,4 @@ zy.jvm.classloader.MyTest12 用来验证 调用ClassLoader类的loadClass方法�
 zy.jvm.classloader.MyTest13 用来查看各个类加载器的层级关系
 zy.jvm.classloader.MyTest14 用来验证 对于数组实例来说，其类型是由JVM在运行期动态生成的
 zy.jvm.classloader.MyTest15 用来验证类加载器的JavaDoc中关于ClassLoader的描述
+zy.jvm.classloader.MyTest16 自定义一个类加载器，以说明自定义类加载器的工作方式
