@@ -131,7 +131,8 @@ public class MyTest16 extends ClassLoader {
 //        test(loader1);
         // 使类加载器loader1在设置的路径上去寻找相关的类，但这个路径是classpath，所以系统类加载器会直接加载这个路径里的类
 //        loader1.setPath("/Users/zhangyan/Documents/Learning/SelfCodes/jvm_lecture/out/production/classes");
-        loader1.setPath("/Users/zhangyan/Documents/Learning/SelfCodes/cpout/");
+        // 将工程中的zy.jvm.classloader.MyTest1的类文件移动到工程的classpath路径以外，就会由MyTest16加载MyTest1
+        loader1.setPath("/Users/zhangyan/Documents/Learning/SelfCodes/jvm_lecture/cpout/");
 
         Class<?> clazz = loader1.loadClass("zy.jvm.classloader.MyTest1");
         System.out.println("class: " + clazz.hashCode());
@@ -140,7 +141,22 @@ public class MyTest16 extends ClassLoader {
         System.out.println(object);
         System.out.println(clazz.getClassLoader().toString());
 
+        System.out.println("==================================");
 
+        // 将工程中的zy.jvm.classloader.MyTest1的类文件移动到工程的classpath路径以外，
+        // 就会由MyTest16的不同实例分别加载MyTest1类
+        // 然而，如果classpath中存在zy.jvm.classloader.MyTest1的类文件，
+        // 那么loader1加载时会由其父类加载器(系统类加载器)加载，
+        // loader2加载时父类加载器会先查找MyTest1有没有被加载，被加载过就不会再次加载
+        MyTest16 loader2 = new MyTest16("loader2");
+        loader2.setPath("/Users/zhangyan/Documents/Learning/SelfCodes/jvm_lecture/cpout/");
+
+        Class<?> clazz2 = loader2.loadClass("zy.jvm.classloader.MyTest1");
+        System.out.println("class: " + clazz2.hashCode()); //用Class实例的hashCode以标识是否为同一个实例
+        Object object2 = clazz2.newInstance();
+
+        System.out.println(object2);
+        System.out.println(clazz2.getClassLoader().toString());
 
     }
 }
