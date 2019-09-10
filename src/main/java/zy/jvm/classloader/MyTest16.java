@@ -125,7 +125,7 @@ public class MyTest16 extends ClassLoader {
         // sun.misc.Launcher$AppClassLoader@135fbaa4
         // 系统类加载器是 MyTest1的 定义类加载器，而MyTest16和系统类加载器是MyTest1的 初始类加载器
     }
-    public static void main(String[] args) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+    public static void main(String[] args) throws IllegalAccessException, InstantiationException, ClassNotFoundException, InterruptedException {
         // 创建一个类加载器 loader1，其双亲类加载器是 系统类加载器
         MyTest16 loader1 = new MyTest16("loader1");
 //        test(loader1);
@@ -144,7 +144,7 @@ public class MyTest16 extends ClassLoader {
         System.out.println("==================================");
 
         // 将工程中的zy.jvm.classloader.MyTest1的类文件移动到工程的classpath路径以外，
-        // 就会由MyTest16的不同实例分别加载MyTest1类
+        // 就会由MyTest16的不同实例分别加载MyTest1类，这是因为MyTest16的不同实例构成了不同的类命名空间
         // 然而，如果classpath中存在zy.jvm.classloader.MyTest1的类文件，
         // 那么loader1加载时会由其父类加载器(系统类加载器)加载，
         // loader2加载时父类加载器会先查找MyTest1有没有被加载，被加载过就不会再次加载
@@ -157,6 +157,40 @@ public class MyTest16 extends ClassLoader {
 
         System.out.println(object2);
         System.out.println(clazz2.getClassLoader().toString());
+
+        System.out.println("==================================");
+
+        MyTest16 loader3 = new MyTest16(loader1, "loader3");
+        loader2.setPath("/Users/zhangyan/Documents/Learning/SelfCodes/jvm_lecture/cpout/");
+
+        Class<?> clazz3 = loader3.loadClass("zy.jvm.classloader.MyTest1");
+        System.out.println("class: " + clazz3.hashCode()); // 类由loader3的父加载器loader1加载
+        Object object3 = clazz3.newInstance();
+
+        System.out.println(object3);
+        System.out.println(clazz3.getClassLoader().toString());
+
+        System.out.println("==================================");
+        /*
+        要查看类的卸载过程，要加入 -XX:+TraceClassUnloading，并进行一次垃圾回收
+         */
+        loader1 = null;
+        clazz = null;
+        object = null;
+
+        System.gc();
+
+        Thread.sleep(100000);  // 暂停继续运行，方便使用jvisualvm查看内存使用情况
+
+        loader1 = new MyTest16("loader1");
+        loader1.setPath("/Users/zhangyan/Documents/Learning/SelfCodes/jvm_lecture/cpout/");
+
+        clazz = loader1.loadClass("zy.jvm.classloader.MyTest1");
+        System.out.println("class: " + clazz.hashCode());
+        object = clazz.newInstance();
+
+        System.out.println(object);
+        System.out.println(clazz.getClassLoader().toString());
 
     }
 }
