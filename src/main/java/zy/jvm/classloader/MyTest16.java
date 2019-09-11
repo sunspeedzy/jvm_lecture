@@ -173,6 +173,7 @@ public class MyTest16 extends ClassLoader {
         System.out.println("==================================");
         /*
         要查看类的卸载过程，要加入 -XX:+TraceClassUnloading，并进行一次垃圾回收
+        不过在 mac 上运行，没有效果
          */
         loader1 = null;
         clazz = null;
