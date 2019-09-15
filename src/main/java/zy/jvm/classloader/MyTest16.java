@@ -44,6 +44,10 @@ public class MyTest16 extends ClassLoader {
         this.classLoaderName = classLoaderName;
     }
 
+    public MyTest16(ClassLoader parent) {
+        super(parent);
+    }
+
     public void setPath(String path) {
         this.path = path;
     }

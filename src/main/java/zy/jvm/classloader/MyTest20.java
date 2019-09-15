@@ -19,6 +19,6 @@ public class MyTest20 {
 
         Method method = clazz1.getMethod("setMyPerson", Object.class);
         method.invoke(object1, object2);
-        // 在第21行  无异常抛出
+        // 在上一行  无异常抛出
     }
 }
