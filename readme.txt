@@ -31,3 +31,4 @@ zy.jvm.classloader.MyTest20 用来验证 类加载器所加载的类 在反射�
 zy.jvm.classloader.MyPerson
 zy.jvm.classloader.MyTest21 验证 同名类在不同的命名空间之间互不可见
 zy.jvm.classloader.MyTest24 用来讲解线程类上下文类加载器
+zy.jvm.classloader.MyTest25 验证线程的上下文类加载器是 AppClassLoader
