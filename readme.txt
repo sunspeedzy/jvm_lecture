@@ -32,3 +32,5 @@ zy.jvm.classloader.MyPerson
 zy.jvm.classloader.MyTest21 验证 同名类在不同的命名空间之间互不可见
 zy.jvm.classloader.MyTest24 用来讲解线程类上下文类加载器
 zy.jvm.classloader.MyTest25 验证线程的上下文类加载器是 AppClassLoader
+zy.jvm.classloader.MyTest26 ServiceLoader在SPI中的作用，第29课视频
+zy.jvm.classloader.MyTest27 通过JDBC驱动加载深刻理解线程上下文类加载器机制，第30课视频
