@@ -35,7 +35,7 @@ interface MyParent5_2{
 }
 
 interface MyChild5_2 extends MyParent5_2 {
-    //    public static int b = 5
+//    public static int b = 5;
     public static final int b = new Random().nextInt(4);
     public static Thread thread = new Thread() {
         {
