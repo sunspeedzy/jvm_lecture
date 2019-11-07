@@ -35,6 +35,12 @@ zy.jvm.classloader.MyTest25 验证线程的上下文类加载器是 AppClassLoad
 zy.jvm.classloader.MyTest26 ServiceLoader在SPI中的作用，第29课视频
 zy.jvm.classloader.MyTest27 通过JDBC驱动加载深刻理解线程上下文类加载器机制，第30课视频
 
+zy.jvm.classloader.MyTest22 查看 静态内部类的加载 情况，静态内部类在被调用之前不会被加载到内存中
+
 zy.jvm.bytecode.MyTest1 用来演示查看java class文件用
 zy.jvm.bytecode.MyTest2 含有静态方法和静态变量的java类
 zy.jvm.bytecode.MyTest3 含有异常处理的方法
+zy.jvm.bytecode.MyTest4~7 展示重载与重写的字节码
+zy.jvm.bytecode.MyTest8 展示基于栈的指令集
+
+
