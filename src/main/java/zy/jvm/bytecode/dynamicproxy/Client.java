@@ -16,6 +16,16 @@ public class Client {
 //        Subject subject = (Subject) Proxy.newProxyInstance(
 //                RealSubject.class.getClassLoader(), RealSubject.class.getInterfaces(), ds);
         subject.request();
+        // 上一条语句的执行结果是
+        // before calling: public abstract void zy.jvm.bytecode.dynamicproxy.Subject.request()
+        // From real subject
+        // after calling: public abstract void zy.jvm.bytecode.dynamicproxy.Subject.request()
+        System.out.println(subject.toString());
+        subject.request();
+        // 上一条语句的执行结果是
+        // before calling: public java.lang.String java.lang.Object.toString()
+        // after calling: public java.lang.String java.lang.Object.toString()
+        // null
 
         System.out.println(subject.getClass());
         System.out.println(subject.getClass().getSuperclass());

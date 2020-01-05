@@ -42,5 +42,5 @@ zy.jvm.bytecode.MyTest2 含有静态方法和静态变量的java类
 zy.jvm.bytecode.MyTest3 含有异常处理的方法
 zy.jvm.bytecode.MyTest4~7 展示重载与重写的字节码
 zy.jvm.bytecode.MyTest8 展示基于栈的指令集
-
+zy.jvm.bytecode.dynamicproxy.* 用于演示动态代理在字节码中是如何表示的，即透过字节码生成审视Java动态代理运作机制
 
